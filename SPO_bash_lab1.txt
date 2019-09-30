@@ -1,0 +1,41 @@
+#!/bin/bash
+(echo "Filepath,Filename,Extension,Size,Permissions,Creation date, Modify date,MIME-type,Duration,Image size")>./Info.xls
+
+pars()
+{
+        (
+        for i in "$1"/*
+        do
+        object=$i
+        if [[ -d $object && -s $object ]]; then
+                pars "$object"
+                continue
+        fi
+        filepath="$object"
+        filename="$(basename $object)"
+        extension="${object#*.}"
+        if [[ $filename == $extension ]]; then
+                extension="unknown"
+        fi
+        if [[ $extension == "mp4" || $extension == "mkv" ]]; then
+                duration=$(mediainfo "$i"|head -n7|tail -n1|cut -c44-)
+        elif [[ $extension == "avi" ]]; then
+                duration=$(mediainfo "$i"|head -n6|tail -n1|cut -c44-)
+        elif [[ $extension == "mp3" ]]; then
+                duration=$(mediainfo "$i"|head -n5|tail -n1|cut -c44-)
+        elif [[ $extension == "jpg" ]]; then
+                imgsize=$(identify -format '%w %h' $object)
+        else
+                duration="-"
+                imgsize="-"
+        fi
+        size=$(stat -c%s "$object")
+        access=$(stat -c%A "$object")
+        birth=$(stat -t -c%.10w "$object")
+        mod=$(stat -t -c%.10y "$object")
+        mime=$(file --mime-type -b "$object")
+        echo $filepath,$filename,$extension,$size,$access,$birth,$mod,$mime,$duration,$imgsize
+        done
+        )>>./Info.xls
+}
+pars ~/SPO
