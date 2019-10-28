@@ -182,3 +182,49 @@ axs[1].set_xlabel('Количество УИКов')
 axs[1].set_ylabel('Явка')
 plt.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.25, hspace=0.7)
 plt.show()
+
+x_axis = []
+x_axis_percent = []
+y_axis_beglov = []
+y_axis_amosov = []
+y_axis_tikhonova = []
+
+for j in range(31):
+    for i in range(TIK[j].shape[1]):
+        x_axis_percent.append((TIK[j][2,i]+TIK[j][3,i]) / TIK[j][0,i])
+        x_axis.append(TIK[j][2,i]+TIK[j][3,i])
+        y_axis_beglov.append(TIK[j][12,i] / TIK[j][8,i])
+        y_axis_amosov.append(TIK[j][11, i] / TIK[j][8, i])
+        y_axis_tikhonova.append(TIK[j][13, i] / TIK[j][8, i])
+
+fig,axs = plt.subplots(2, 3)
+axs[0,0].scatter(x_axis, y_axis_beglov)
+axs[0,0].set_xlabel('Явка')
+axs[0,0].set_ylabel('Количество голосов в %')
+axs[0,0].set_title('Беглов')
+fig.suptitle('Зависимость количества голосов от явки')
+axs[0,1].scatter(x_axis, y_axis_amosov)
+axs[0,1].set_xlabel('Явка')
+axs[0,1].set_ylabel('Количество голосов в %')
+axs[0,1].set_title('Амосов')
+axs[0,2].scatter(x_axis, y_axis_tikhonova)
+axs[0,2].set_xlabel('Явка')
+axs[0,2].set_ylabel('Количество голосов в %')
+axs[0,2].set_title('Тихонова')
+
+
+axs[1,0].scatter(x_axis_percent, y_axis_beglov)
+axs[1,0].set_xlabel('Явка в процентах %')
+axs[1,0].set_ylabel('Количество голосов в %')
+axs[1,0].set_title('Беглов')
+fig.suptitle('Зависимость количества голосов от явки')
+axs[1,1].scatter(x_axis_percent, y_axis_amosov)
+axs[1,1].set_xlabel('Явка в процентах %')
+axs[1,1].set_ylabel('Количество голосов в %')
+axs[1,1].set_title('Амосов')
+axs[1,2].scatter(x_axis_percent, y_axis_tikhonova)
+axs[1,2].set_xlabel('Явка в процентах %')
+axs[1,2].set_ylabel('Количество голосов в %')
+axs[1,2].set_title('Тихонова')
+plt.subplots_adjust(left=0.05, bottom=0.10, right=0.95, top=0.90, wspace=0.25, hspace=0.7)
+plt.show()
