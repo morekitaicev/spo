@@ -94,7 +94,7 @@ tg = folium.FeatureGroup(name='Beglov Info')
 for lat, lon, val, name in zip(gdf_beglov['centroid_lat'].tolist(), gdf_beglov['centroid_lon'].tolist(), gdf_beglov['beglov'].tolist(), gdf_beglov['name'].tolist()):
     html = f"""
     <h2>Saint Petersburg's {name}<\h2><br>
-    <h4>Yavka: {float(round(val,4))} % <\h4>
+    <h4>Beglov yavka: {float(round(val,4))} % <\h4>
     """
     tg.add_child(folium.Marker(location=[lat, lon], popup=html))
 
