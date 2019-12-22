@@ -15,12 +15,13 @@ def stats(flist, sname):
 
 def graph(glist, gname, g_xaxis, g_yaxis):
     glist_cnt = Counter(glist)
-    plt.scatter(glist_cnt.keys(), glist_cnt.values())
+    plt.scatter(glist_cnt.keys(), glist_cnt.values(), s=7)
     plt.title(gname)
     plt.xlabel(g_xaxis)
     plt.ylabel(g_yaxis)
     save_name = gname + '.jpg'
     plt.savefig(save_name)
+    plt.close()
 
 web3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/0da878a13bf145a6b9349a0f738205e8"))
 
@@ -57,8 +58,8 @@ for i in range(1000):
 
 
 
-stats(block_commision, 'Абсолютное значение')
-stats(block_rel, 'Относительное значение')
+stats(block_commision, 'Absolute')
+stats(block_rel, 'Relative')
 
 graph(block_commision, 'Группы блоков с одинаковой комиссией', 'Комиссия в ETH', 'Количество блоков в группе')
 graph(block_rel, 'Группы блоков с одинаковым процентом комиссии', 'Комиссия в %', 'Количество блоков в группе')
